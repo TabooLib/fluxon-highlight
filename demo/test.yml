@@ -1,0 +1,12 @@
+config:
+  name: "test"
+  version: 1.0
+
+script:
+  onLoad: ;&level + 1
+  onUpdate: ;if &player then print "Hello"
+  complex: ;for i in 1..10 then { print &i }
+
+data:
+  value: 100
+  code: ;try throw 'error' catch (e) print &e

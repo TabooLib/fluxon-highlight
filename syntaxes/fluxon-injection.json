@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Fluxon YAML Injection",
+  "scopeName": "fluxon.injection.yaml",
+  "injectionSelector": "L:source.yaml",
+  "patterns": [
+    {
+      "name": "meta.embedded.block.fluxon",
+      "begin": "(:)\\s*(;)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.separator.key-value.yaml" },
+        "2": { "name": "punctuation.definition.fluxon-block.yaml" }
+      },
+      "end": "$|(?=^\\s*[a-zA-Z_-]+\\s*:)",
+      "patterns": [
+        { "include": "source.fluxon" }
+      ]
+    }
+  ]
+}

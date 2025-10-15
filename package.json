@@ -1,0 +1,44 @@
+{
+  "name": "fluxon-highlight",
+  "displayName": "Fluxon Syntax Highlight",
+  "description": "Syntax highlighting for .fs files",
+  "version": "0.0.1",
+  "publisher": "fluxon",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "fluxon",
+        "aliases": [
+          "Fluxon",
+          "fluxon"
+        ],
+        "extensions": [
+          ".fs"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "fluxon",
+        "scopeName": "source.fluxon",
+        "path": "./syntaxes/fluxon.tmLanguage.json"
+      },
+      {
+        "scopeName": "fluxon.injection.yaml",
+        "path": "./syntaxes/fluxon-injection.json",
+        "injectTo": ["source.yaml"],
+        "embeddedLanguages": {
+          "meta.embedded.block.fluxon": "fluxon"
+        }
+      }
+    ]
+  },
+  "packageManager": "pnpm@10.15.1+sha512.34e538c329b5553014ca8e8f4535997f96180a1d0f614339357449935350d924e22f8614682191264ec33d1462ac21561aff97f6bb18065351c162c7e8f6de67"
+}
