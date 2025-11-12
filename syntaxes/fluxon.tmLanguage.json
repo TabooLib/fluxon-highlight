@@ -72,11 +72,11 @@
       "patterns": [
         {
           "name": "keyword.control",
-          "match": "\\b(if|else|then|when|while|for|in|break|continue|return|try|catch|finally|throw)\\b"
+          "match": "\\b(if|then|else|when|is|for|in|while|break|continue|return|try|catch|finally)\\b"
         },
         {
           "name": "keyword.other",
-          "match": "\\b(def|import)\\b"
+          "match": "\\b(import|def|fun|val|var|async|sync|await)\\b"
         },
         {
           "name": "support.function",
@@ -84,7 +84,7 @@
         },
         {
           "name": "constant.language",
-          "match": "\\b(true|false)\\b"
+          "match": "\\b(true|false|null)\\b"
         }
       ]
     },

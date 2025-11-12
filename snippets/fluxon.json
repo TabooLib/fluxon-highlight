@@ -1,0 +1,166 @@
+{
+  "Function Definition": {
+    "prefix": "def",
+    "body": [
+      "def ${1:functionName}(${2:params}) = ${3:expression}"
+    ],
+    "description": "定义一个函数"
+  },
+  "Function Definition with Block": {
+    "prefix": "defb",
+    "body": [
+      "def ${1:functionName}(${2:params}) = {",
+      "\t$0",
+      "}"
+    ],
+    "description": "定义一个带代码块的函数"
+  },
+  "Async Function Definition": {
+    "prefix": "async",
+    "body": [
+      "async def ${1:functionName} = {",
+      "\t$0",
+      "}"
+    ],
+    "description": "定义一个异步函数"
+  },
+  "For Loop": {
+    "prefix": "for",
+    "body": [
+      "for ${1:item} in ${2:collection} {",
+      "\t$0",
+      "}"
+    ],
+    "description": "for 循环"
+  },
+  "While Loop": {
+    "prefix": "while",
+    "body": [
+      "while ${1:condition} {",
+      "\t$0",
+      "}"
+    ],
+    "description": "while 循环"
+  },
+  "If-Then Statement": {
+    "prefix": "if",
+    "body": [
+      "if ${1:condition} then ${2:expression}"
+    ],
+    "description": "if-then 条件语句"
+  },
+  "If-Then-Else Statement": {
+    "prefix": "ife",
+    "body": [
+      "if ${1:condition} then ${2:thenExpr} else ${3:elseExpr}"
+    ],
+    "description": "if-then-else 条件语句"
+  },
+  "If with Block": {
+    "prefix": "ifb",
+    "body": [
+      "if ${1:condition} then {",
+      "\t${2}",
+      "} else {",
+      "\t$0",
+      "}"
+    ],
+    "description": "if-then-else 代码块"
+  },
+  "When Expression": {
+    "prefix": "when",
+    "body": [
+      "when ${1:value} {",
+      "\t${2:case1} -> ${3:result1}",
+      "\t${4:case2} -> ${5:result2}",
+      "\telse -> $0",
+      "}"
+    ],
+    "description": "when 模式匹配表达式"
+  },
+  "When Condition": {
+    "prefix": "whenc",
+    "body": [
+      "when {",
+      "\t${1:condition1} -> ${2:result1}",
+      "\t${3:condition2} -> ${4:result2}",
+      "\telse -> $0",
+      "}"
+    ],
+    "description": "when 条件匹配"
+  },
+  "Try-Catch": {
+    "prefix": "try",
+    "body": [
+      "try {",
+      "\t${1}",
+      "} catch (${2:e}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "try-catch 异常处理"
+  },
+  "Try-Catch-Finally": {
+    "prefix": "tryf",
+    "body": [
+      "try {",
+      "\t${1}",
+      "} catch (${2:e}) {",
+      "\t${3}",
+      "} finally {",
+      "\t$0",
+      "}"
+    ],
+    "description": "try-catch-finally 异常处理"
+  },
+  "Import Statement": {
+    "prefix": "import",
+    "body": [
+      "import ${1:moduleName}"
+    ],
+    "description": "导入模块"
+  },
+  "Print Statement": {
+    "prefix": "print",
+    "body": [
+      "print(${1:value})"
+    ],
+    "description": "打印输出"
+  },
+  "Return Statement": {
+    "prefix": "ret",
+    "body": [
+      "return ${1:value}"
+    ],
+    "description": "返回语句"
+  },
+  "Await Expression": {
+    "prefix": "await",
+    "body": [
+      "await ${1:asyncFunction}"
+    ],
+    "description": "等待异步函数执行"
+  },
+  "Annotation": {
+    "prefix": "@",
+    "body": [
+      "@${1:AnnotationName}(${2:params})"
+    ],
+    "description": "添加注解"
+  },
+  "Variable Assignment": {
+    "prefix": "var",
+    "body": [
+      "${1:varName} = ${2:value}"
+    ],
+    "description": "变量赋值"
+  },
+  "Variable Reference": {
+    "prefix": "&",
+    "body": [
+      "&${1:varName}"
+    ],
+    "description": "变量引用"
+  }
+}
+

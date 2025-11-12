@@ -1,16 +1,66 @@
 {
   "name": "fluxon-highlight",
   "displayName": "Fluxon Syntax Highlight",
-  "description": "Syntax highlighting for .fs files",
-  "version": "0.0.1",
-  "publisher": "fluxon",
+  "description": "Syntax highlighting and function completion for .fs files",
+  "version": "0.2.0",
+  "publisher": "taboolib",
+  "icon": "icon.png",
+  "main": "./dist/extension.js",
   "engines": {
-    "vscode": "^1.80.0"
+    "vscode": "^1.105.0"
   },
   "categories": [
     "Programming Languages"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/taboolib/fluxon-highlight"
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "prepackage": "pnpm run compile",
+    "package": "vsce package",
+    "lint": "echo 'No linter configured'"
+  },
   "contributes": {
+    "configuration": {
+      "title": "Fluxon",
+      "properties": {
+        "fluxonCompletion.catalogPath": {
+          "type": "string",
+          "default": "",
+          "description": "Custom path to fluxon-functions.json (leave empty to use built-in catalog). Supports workspace-relative paths like ${workspaceFolder}/core/build/fluxon-functions.json"
+        },
+        "fluxonCompletion.showNamespaces": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show namespace information in completion items"
+        },
+        "fluxonCompletion.enableExtensions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable extension function completions"
+        },
+        "fluxonCompletion.trace": {
+          "type": "string",
+          "enum": ["off", "basic", "verbose"],
+          "default": "off",
+          "description": "Trace logging level for completion provider"
+        },
+        "fluxonCompletion.includeUserFunctions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include user-defined functions in completion suggestions"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "fluxon.refreshCatalog",
+        "title": "Fluxon: Refresh Function Catalog"
+      }
+    ],
     "languages": [
       {
         "id": "fluxon",
@@ -31,14 +81,28 @@
         "path": "./syntaxes/fluxon.tmLanguage.json"
       },
       {
-        "scopeName": "fluxon.injection.yaml",
+        "scopeName": "source.yaml.fluxon-injection",
         "path": "./syntaxes/fluxon-injection.json",
-        "injectTo": ["source.yaml"],
+        "injectTo": [
+          "source.yaml"
+        ],
         "embeddedLanguages": {
           "meta.embedded.block.fluxon": "fluxon"
         }
       }
+    ],
+    "snippets": [
+      {
+        "language": "fluxon",
+        "path": "./snippets/fluxon.json"
+      }
     ]
   },
-  "packageManager": "pnpm@10.15.1+sha512.34e538c329b5553014ca8e8f4535997f96180a1d0f614339357449935350d924e22f8614682191264ec33d1462ac21561aff97f6bb18065351c162c7e8f6de67"
+  "packageManager": "pnpm@10.15.1+sha512.34e538c329b5553014ca8e8f4535997f96180a1d0f614339357449935350d924e22f8614682191264ec33d1462ac21561aff97f6bb18065351c162c7e8f6de67",
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/vscode": "^1.105.0",
+    "esbuild": "^0.27.0",
+    "typescript": "^5.9.3"
+  }
 }
