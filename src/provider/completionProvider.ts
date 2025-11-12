@@ -72,21 +72,12 @@ export class FluxonCompletionProvider implements vscode.CompletionItemProvider {
         });
       }
     } else if (ctx.type === ContextType.Extension) {
-      // 扩展函数补全：提供所有扩展函数（不区分类型）
-      if (ctx.hostType === '*') {
-        const allExtensions = this.catalogLoader.getExtensionFunctions();
-        Object.values(allExtensions).forEach(fnList => {
-          fnList.forEach(fn => {
-            items.push(this.createCompletionItem(fn));
-          });
-        });
-      } else if (ctx.hostType) {
-        // 如果未来需要按类型过滤，保留此分支
-        const extensionFunctions = this.catalogLoader.getExtensionsForHost(ctx.hostType);
-        extensionFunctions.forEach(fn => {
-          items.push(this.createCompletionItem(fn));
-        });
-      }
+      // 扩展函数补全：提供所有扩展函数（合并后的，相同名字的函数已合并参数）
+      const mergedExtensions = this.catalogLoader.getMergedExtensionFunctions();
+      mergedExtensions.forEach(fn => {
+        items.push(this.createCompletionItem(fn));
+      });
+      
       // 同时提供系统函数（优先级降低）
       const systemFunctions = this.catalogLoader.getSystemFunctions();
       systemFunctions.forEach(fn => {
@@ -123,12 +114,10 @@ export class FluxonCompletionProvider implements vscode.CompletionItemProvider {
       systemFunctions.forEach(fn => {
         if (fn.namespace) nsSet.add(fn.namespace);
       });
-      // 扩展函数中的命名空间
-      const allExtensions = this.catalogLoader.getExtensionFunctions();
-      Object.values(allExtensions).forEach(fnList => {
-        fnList.forEach(fn => {
-          if (fn.namespace) nsSet.add(fn.namespace);
-        });
+      // 扩展函数中的命名空间（使用合并后的）
+      const mergedExtensions = this.catalogLoader.getMergedExtensionFunctions();
+      mergedExtensions.forEach(fn => {
+        if (fn.namespace) nsSet.add(fn.namespace);
       });
 
       const namespaces = Array.from(nsSet).sort();
