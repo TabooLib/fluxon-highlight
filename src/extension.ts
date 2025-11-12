@@ -39,14 +39,14 @@ export function activate(context: vscode.ExtensionContext) {
   const fluxonProvider = vscode.languages.registerCompletionItemProvider(
     { language: 'fluxon', scheme: 'file' },
     completionProvider,
-    ':', '@' // 冒号触发 :: 语法，@ 触发注解补全
+    ':', '@' 
   );
 
   // 为 YAML 文件中嵌入的 Fluxon 代码注册补全
   const yamlProvider = vscode.languages.registerCompletionItemProvider(
     { language: 'yaml', scheme: 'file' },
     completionProvider,
-    ':', '@' // 同样支持 :: 和 @ 触发
+    ':', '@'
   );
 
   context.subscriptions.push(fluxonProvider, yamlProvider);

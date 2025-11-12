@@ -53,7 +53,6 @@ export class FluxonCompletionProvider implements vscode.CompletionItemProvider {
     }
 
     const items: vscode.CompletionItem[] = [];
-
     if (ctx.type === ContextType.TopLevel) {
       // 顶层补全：提供关键字 + 系统函数 + 用户函数
       // 1. 添加关键字
@@ -93,9 +92,68 @@ export class FluxonCompletionProvider implements vscode.CompletionItemProvider {
       systemFunctions.forEach(fn => {
         items.push(this.createCompletionItem(fn, true));
       });
+    } else if (ctx.type === ContextType.SingleColon) {
+      // 单冒号补全：提示用户输入第二个冒号以访问扩展函数
+      const colonItem = new vscode.CompletionItem(':', vscode.CompletionItemKind.Operator);
+      colonItem.detail = 'extension method operator';
+      colonItem.insertText = ':';
+      colonItem.documentation = new vscode.MarkdownString(
+        'Complete to `::` to access extension methods'
+      );
+      colonItem.sortText = '0_colon';
+      colonItem.command = {
+        command: 'editor.action.triggerSuggest',
+        title: 'Trigger completion again'
+      };
+      items.push(colonItem);
     } else if (ctx.type === ContextType.Annotation) {
       // 注解补全：提供所有注解
       items.push(...this.createAnnotationCompletions());
+    } else if (ctx.type === ContextType.Import) {
+      // import 语句补全：提供所有已知命名空间
+      // 检测当前行前缀以判断是否已经有起始引号
+      const line = document.lineAt(position.line).text;
+      const prefix = line.substring(0, position.character);
+      const importMatch = prefix.match(/\bimport\s+(['"])?([\w:._-]*)$/);
+      const quoteChar = importMatch && importMatch[1] ? importMatch[1] : null;
+
+      const nsSet = new Set<string>();
+      // 系统函数中的命名空间
+      const systemFunctions = this.catalogLoader.getSystemFunctions();
+      systemFunctions.forEach(fn => {
+        if (fn.namespace) nsSet.add(fn.namespace);
+      });
+      // 扩展函数中的命名空间
+      const allExtensions = this.catalogLoader.getExtensionFunctions();
+      Object.values(allExtensions).forEach(fnList => {
+        fnList.forEach(fn => {
+          if (fn.namespace) nsSet.add(fn.namespace);
+        });
+      });
+
+      const namespaces = Array.from(nsSet).sort();
+      namespaces.forEach(ns => {
+        const item = new vscode.CompletionItem(ns, vscode.CompletionItemKind.Module);
+        item.detail = 'namespace';
+        item.sortText = `0_${ns}`;
+        
+        // 处理引号：import 语句必须使用引号
+        if (quoteChar) {
+          // 用户已输入起始引号（如 import "），只补全命名空间和闭合引号
+          item.insertText = new vscode.SnippetString(`${ns}${quoteChar}`);
+        } else {
+          // 用户未输入引号（如 import ），补全为完整的带引号命名空间
+          // 默认使用双引号
+          item.insertText = new vscode.SnippetString(`"${ns}"`);
+        }
+        
+        // 添加文档说明
+        item.documentation = new vscode.MarkdownString(
+          `Import namespace: \`${ns}\`\n\nUsage: \`import "${ns}"\``
+        );
+        
+        items.push(item);
+      });
     }
     return items;
   }
