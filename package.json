@@ -2,7 +2,7 @@
   "name": "fluxon-highlight",
   "displayName": "Fluxon Syntax Highlight",
   "description": "Syntax highlighting and function completion for .fs files",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "taboolib",
   "icon": "icon.png",
   "main": "./dist/extension.js",
