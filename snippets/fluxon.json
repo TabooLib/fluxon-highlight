@@ -161,6 +161,27 @@
       "&${1:varName}"
     ],
     "description": "变量引用"
+  },
+  "Lambda Argument": {
+    "prefix": "(|",
+    "body": [
+      "(|${1:it}| { $0 })"
+    ],
+    "description": "Lambda 作为参数"
+  },
+  "Lambda Argument Implicit It": {
+    "prefix": "(||",
+    "body": [
+      "(|| { $0 })"
+    ],
+    "description": "Lambda 作为参数（隐式 it）"
+  },
+  "Lambda Argument Multi Params": {
+    "prefix": "(|,",
+    "body": [
+      "(|${1:a}, ${2:b}| { $0 })"
+    ],
+    "description": "Lambda 作为参数（多参数）"
   }
 }
 

@@ -6,6 +6,7 @@
     { "include": "#comments" },
     { "include": "#annotations" },
     { "include": "#strings" },
+    { "include": "#lambda" },
     { "include": "#keywords" },
     { "include": "#variable-reference" },
     { "include": "#numbers" },
@@ -52,6 +53,20 @@
             {
               "name": "constant.character.escape",
               "match": "\\\\."
+            },
+            {
+              "name": "meta.interpolation.fluxon",
+              "begin": "\\$\\{",
+              "end": "\\}",
+              "beginCaptures": {
+                "0": { "name": "punctuation.section.interpolation.begin" }
+              },
+              "endCaptures": {
+                "0": { "name": "punctuation.section.interpolation.end" }
+              },
+              "patterns": [
+                { "include": "source.fluxon" }
+              ]
             }
           ]
         },
@@ -73,6 +88,14 @@
         {
           "name": "keyword.control",
           "match": "\\b(if|then|else|when|is|for|in|while|break|continue|return|try|catch|finally)\\b"
+        },
+        {
+          "name": "keyword.operator.new",
+          "match": "\\b(new)\\b"
+        },
+        {
+          "name": "storage.modifier",
+          "match": "\\b(static)\\b"
         },
         {
           "name": "keyword.other",
@@ -101,6 +124,31 @@
         {
           "name": "constant.numeric",
           "match": "\\b([0-9]+(\\.[0-9]+)?)\\b"
+        }
+      ]
+    },
+    "lambda": {
+      "patterns": [
+        {
+          "name": "meta.function.lambda",
+          "begin": "\\|",
+          "end": "\\|",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.parameters.begin" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.parameters.end" }
+          },
+          "patterns": [
+            {
+              "name": "variable.parameter",
+              "match": "[a-zA-Z_][a-zA-Z0-9_]*"
+            },
+            {
+              "name": "punctuation.separator.parameter",
+              "match": ","
+            }
+          ]
         }
       ]
     },

@@ -2,7 +2,7 @@
   "name": "fluxon-highlight",
   "displayName": "Fluxon Syntax Highlight",
   "description": "Syntax highlighting and function completion for .fs files",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "publisher": "taboolib",
   "icon": "icon.png",
   "main": "./dist/extension.js",
@@ -44,7 +44,11 @@
         },
         "fluxonCompletion.trace": {
           "type": "string",
-          "enum": ["off", "basic", "verbose"],
+          "enum": [
+            "off",
+            "basic",
+            "verbose"
+          ],
           "default": "off",
           "description": "Trace logging level for completion provider"
         },
@@ -102,6 +106,7 @@
   "devDependencies": {
     "@types/node": "^24.10.1",
     "@types/vscode": "^1.105.0",
+    "@vscode/vsce": "^3.7.1",
     "esbuild": "^0.27.0",
     "typescript": "^5.9.3"
   }
